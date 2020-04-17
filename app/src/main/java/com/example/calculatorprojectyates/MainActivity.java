@@ -181,6 +181,18 @@ public class MainActivity extends AppCompatActivity {
                 evaluate();
             }
         });
+        clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clear();
+            }
+        });
+        clearAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clearAll();
+            }
+        });
     }
 
 
@@ -247,6 +259,37 @@ public class MainActivity extends AppCompatActivity {
         }
         op1 = String.valueOf(answer);
 
+    }
+
+    private void clearAll(){
+        nextOperation = operation.none;
+        currentStage = stage.operand1;
+        op1 = "";
+        opc = "";
+        op2 = "";
+        calcText.setText(op1);
+    }
+
+    private void clear(){
+
+        switch (currentStage) {
+            case operand1:
+                clearAll();
+                break;
+            case operator:
+                calcText.setText(op1);
+                currentStage = stage.operand1;
+                opc = "";
+                nextOperation = operation.none;
+                break;
+            case operand2:
+                calcText.setText(op1+opc);
+                op2 = "";
+                currentStage = stage.operator;
+                break;
+            default:
+                break;
+        }
     }
 
     private void setOperator(char c){
